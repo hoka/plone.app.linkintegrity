@@ -5,8 +5,8 @@
     xmlns:zcml="http://namespaces.zope.org/zcml">
 
   <five:registerPackage package="." initialize=".initialize" />
-
-  <include file="dexterity.zcml" 
+  <include package="Products.CMFCore" file="permissions.zcml"/>
+  <include file="dexterity.zcml"
            zcml:condition="installed plone.dexterity"/>
 
   <adapter
@@ -35,12 +35,12 @@
 
   <configure zcml:condition="installed Products.Archetypes">
 
-    <browser:page 
+    <browser:page
       name="updateLinkIntegrityInformation"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       template="browser/update.pt"
       class=".browser.update.UpdateView"
-      permission="cmf.ManagePortal" /> 
+      permission="cmf.ManagePortal" />
 
     <!-- event handlers for updating link integrity references -->
 
@@ -61,12 +61,12 @@
 
     <subscriber
       for="Products.Archetypes.interfaces.IBaseObject
-           zope.lifecycleevent.interfaces.IObjectRemovedEvent" 
+           zope.lifecycleevent.interfaces.IObjectRemovedEvent"
       handler=".handlers.referencedObjectRemoved" />
 
     <subscriber
       for="Products.Archetypes.interfaces.IReference
-           zope.lifecycleevent.interfaces.IObjectRemovedEvent" 
+           zope.lifecycleevent.interfaces.IObjectRemovedEvent"
       handler=".handlers.referenceRemoved" />
 
   </configure>
